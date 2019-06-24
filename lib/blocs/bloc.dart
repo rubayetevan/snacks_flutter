@@ -14,7 +14,7 @@ class Bloc extends Validators {
   final _email = BehaviorSubject<String>();
   final _password = BehaviorSubject<String>();
   final _pageIndex = BehaviorSubject<int>();
-  final _radioIndex = BehaviorSubject<String>();
+  final _orderRadioValue = BehaviorSubject<String>();
   final _isLoggedIn = BehaviorSubject<bool>();
   final _userEmail = BehaviorSubject<String>();
   final _userName = BehaviorSubject<String>();
@@ -40,7 +40,7 @@ class Bloc extends Validators {
 
   Stream<MenuModel> get menu => _Menu.stream.transform(validateMenu);
 
-  Stream<String> get radioIndex => _radioIndex.stream.transform(validateOrder);
+  Stream<String> get orderRadioValue => _orderRadioValue.stream.transform(validateOrder);
 
   //-----------------------Function---------------------------------------------
 
@@ -54,7 +54,7 @@ class Bloc extends Validators {
 
   Function(int) get changePageIndex => _pageIndex.sink.add;
 
-  Function(String) get changeRadioIndex => _radioIndex.sink.add;
+  Function(String) get changeOrderRadioValue => _orderRadioValue.sink.add;
 
   Function(bool) get changeIsLoggedIn => _isLoggedIn.sink.add;
 
@@ -70,7 +70,7 @@ class Bloc extends Validators {
     _pageIndex.close();
     _isLoggedIn.close();
     _Menu.close();
-    _radioIndex.close();
+    _orderRadioValue.close();
   }
 
   //---------------------------custom_functions---------------------------------

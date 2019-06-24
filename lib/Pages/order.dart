@@ -16,11 +16,13 @@ class OrderPage extends StatelessWidget {
           ),
           radioButtons(),
           StreamBuilder(
-              stream: null,
+              stream: bloc.orderRadioValue,
               builder: (context, snapshot) {
                 return RaisedButton(
                   child: Text('Order'),
-                  onPressed: () {},
+                  onPressed: snapshot.hasData ?(){
+
+                  }:null,
                 );
               })
         ],
@@ -36,7 +38,7 @@ class OrderPage extends StatelessWidget {
             var _alternateMenus = snapshot.data.alternateMenu.split("/");
             var _mainMenu = snapshot.data.mainMenu;
             return StreamBuilder(
-                stream: bloc.radioIndex,
+                stream: bloc.orderRadioValue,
                 builder: (context, snapshot) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +48,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _mainMenu,
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeRadioIndex,
+                            onChanged: bloc.changeOrderRadioValue,
                           ),
                           Text(_mainMenu)
                         ],
@@ -56,7 +58,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[0].trim(),
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeRadioIndex,
+                            onChanged: bloc.changeOrderRadioValue,
                           ),
                           Text(_alternateMenus[0].trim())
                         ],
@@ -66,7 +68,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[1].trim(),
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeRadioIndex,
+                            onChanged: bloc.changeOrderRadioValue,
                           ),
                           Text(_alternateMenus[1].trim())
                         ],
@@ -76,7 +78,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[2].trim(),
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeRadioIndex,
+                            onChanged: bloc.changeOrderRadioValue,
                           ),
                           Text(_alternateMenus[2].trim())
                         ],
@@ -85,7 +87,7 @@ class OrderPage extends StatelessWidget {
                   );
                 });
           } else {
-            return Text('Loading');
+            return Text('');
           }
         });
   }
