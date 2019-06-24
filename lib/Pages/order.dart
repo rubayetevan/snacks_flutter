@@ -44,7 +44,7 @@ class OrderPage extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Radio(
-                            value: 0,
+                            value: _mainMenu,
                             groupValue: snapshot.data,
                             onChanged: bloc.changeRadioIndex,
                           ),
@@ -54,7 +54,7 @@ class OrderPage extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Radio(
-                            value: 1,
+                            value: _alternateMenus[0].trim(),
                             groupValue: snapshot.data,
                             onChanged: bloc.changeRadioIndex,
                           ),
@@ -64,7 +64,7 @@ class OrderPage extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Radio(
-                            value: 2,
+                            value: _alternateMenus[1].trim(),
                             groupValue: snapshot.data,
                             onChanged: bloc.changeRadioIndex,
                           ),
@@ -74,7 +74,7 @@ class OrderPage extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Radio(
-                            value: 3,
+                            value: _alternateMenus[2].trim(),
                             groupValue: snapshot.data,
                             onChanged: bloc.changeRadioIndex,
                           ),

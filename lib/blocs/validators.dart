@@ -30,6 +30,15 @@ class Validators {
     }
   });
 
+  final validateOrder =
+  StreamTransformer<String, String>.fromHandlers(handleData: (order, sink) {
+    if (order != null) {
+      sink.add(order);
+    } else {
+      sink.add("");
+    }
+  });
+
   final validateLogin = StreamTransformer<bool, bool>.fromHandlers(
       handleData: (isLoggedIn, sink) {
     sink.add(isLoggedIn);

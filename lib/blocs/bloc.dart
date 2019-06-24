@@ -9,13 +9,12 @@ import 'package:toast/toast.dart';
 import './validators.dart';
 
 class Bloc extends Validators {
-
   //-------------------BehaviorSubjects-----------------------------------------
 
   final _email = BehaviorSubject<String>();
   final _password = BehaviorSubject<String>();
   final _pageIndex = BehaviorSubject<int>();
-  final _radioIndex = BehaviorSubject<int>();
+  final _radioIndex = BehaviorSubject<String>();
   final _isLoggedIn = BehaviorSubject<bool>();
   final _userEmail = BehaviorSubject<String>();
   final _userName = BehaviorSubject<String>();
@@ -23,7 +22,8 @@ class Bloc extends Validators {
 
   //-----------------------Stream-----------------------------------------------
 
-  Stream<String> get userEmail => _userEmail.stream.transform(validateUserEmail);
+  Stream<String> get userEmail =>
+      _userEmail.stream.transform(validateUserEmail);
 
   Stream<String> get userName => _userName.stream.transform(validateUserName);
 
@@ -40,8 +40,7 @@ class Bloc extends Validators {
 
   Stream<MenuModel> get menu => _Menu.stream.transform(validateMenu);
 
-  Stream<int> get radioIndex => _radioIndex.stream.transform(validateIndex);
-
+  Stream<String> get radioIndex => _radioIndex.stream.transform(validateOrder);
 
   //-----------------------Function---------------------------------------------
 
@@ -55,13 +54,11 @@ class Bloc extends Validators {
 
   Function(int) get changePageIndex => _pageIndex.sink.add;
 
-  Function(int) get changeRadioIndex => _radioIndex.sink.add;
+  Function(String) get changeRadioIndex => _radioIndex.sink.add;
 
   Function(bool) get changeIsLoggedIn => _isLoggedIn.sink.add;
 
   Function(MenuModel) get changeMenu => _Menu.sink.add;
-
-
 
   //----------------------------dispose-----------------------------------------
 
@@ -74,7 +71,6 @@ class Bloc extends Validators {
     _isLoggedIn.close();
     _Menu.close();
     _radioIndex.close();
-
   }
 
   //---------------------------custom_functions---------------------------------
@@ -107,18 +103,16 @@ class Bloc extends Validators {
   }
 
   void showMenu() {
-    repository.getMenu().then((onValue){
-     changeMenu(onValue);
+    repository.getMenu().then((onValue) {
+      changeMenu(onValue);
     });
   }
 
-  void logout(BuildContext context){
-    sessionManager.clearSession().whenComplete((){
+  void logout(BuildContext context) {
+    sessionManager.clearSession().whenComplete(() {
       routes.routeToLoginPage(context);
     });
   }
-
-
 }
 
 final bloc = Bloc();
