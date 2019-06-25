@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'modelClasses/menuModel.dart';
+import 'modelClasses/userListModel.dart';
 import 'modelClasses/userModel.dart';
 
 class Repository {
@@ -12,6 +13,7 @@ class Repository {
 
   MenuModel _menuModel;
   UserModel _userModel;
+  UserListModel _userListModel;
 
   static final options = BaseOptions(
     baseUrl: basURL,
@@ -37,6 +39,20 @@ class Repository {
       return _menuModel;
     } else {
       return _menuModel;
+    }
+  }
+
+  Future<UserListModel> getUserList() async {
+    if (_userListModel == null) {
+      var response = await _dio.request(
+        "/getuserlist.asp",
+        options: _getOptions,
+      );
+      print(response.data);
+      _userListModel = UserListModel.fromJson(response.data);
+      return _userListModel;
+    } else {
+      return _userListModel;
     }
   }
 

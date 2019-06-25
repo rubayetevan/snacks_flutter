@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:snacks/network/modelClasses/menuModel.dart';
+import 'package:snacks/network/modelClasses/userListModel.dart';
 
 class Validators {
   final validateEmail =
@@ -67,6 +68,14 @@ class Validators {
       sink.add(menu);
     } else {
       sink.addError('menu not found');
+    }
+  });
+  final validateUsers =
+  StreamTransformer<UserListModel, UserListModel>.fromHandlers(handleData: (userList, sink) {
+    if (userList != null) {
+      sink.add(userList);
+    } else {
+      sink.addError('userList not found');
     }
   });
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:snacks/network/modelClasses/menuModel.dart';
+import 'package:snacks/network/modelClasses/userListModel.dart';
 import 'package:snacks/network/repository.dart';
 import 'package:snacks/routing/routs.dart';
 import 'package:snacks/session/sessionManager.dart';
@@ -19,6 +20,8 @@ class Bloc extends Validators {
   final _userEmail = BehaviorSubject<String>();
   final _userName = BehaviorSubject<String>();
   final _Menu = BehaviorSubject<MenuModel>();
+  final _userList = BehaviorSubject<UserListModel>();
+  final _userDropdownValue = BehaviorSubject<String>();
 
   //-----------------------Stream-----------------------------------------------
 
@@ -34,13 +37,23 @@ class Bloc extends Validators {
   Stream<bool> get loginDataValid =>
       Observable.combineLatest2(email, password, (e, p) => true);
 
+  Stream<bool> get orderDataValid =>
+      Observable.combineLatest2(userDropdownValue, orderRadioValue, (e, p) => true);
+
   Stream<int> get pageIndex => _pageIndex.stream.transform(validateIndex);
 
   Stream<bool> get isLoggedIn => _isLoggedIn.stream.transform(validateLogin);
 
   Stream<MenuModel> get menu => _Menu.stream.transform(validateMenu);
 
-  Stream<String> get orderRadioValue => _orderRadioValue.stream.transform(validateOrder);
+  Stream<UserListModel> get userList =>
+      _userList.stream.transform(validateUsers);
+
+  Stream<String> get orderRadioValue =>
+      _orderRadioValue.stream.transform(validateOrder);
+
+  Stream<String> get userDropdownValue =>
+      _userDropdownValue.stream.transform(validateOrder);
 
   //-----------------------Function---------------------------------------------
 
@@ -56,9 +69,14 @@ class Bloc extends Validators {
 
   Function(String) get changeOrderRadioValue => _orderRadioValue.sink.add;
 
+  Function(String) get changeUserDropdownValue => _userDropdownValue.sink.add;
+
   Function(bool) get changeIsLoggedIn => _isLoggedIn.sink.add;
 
   Function(MenuModel) get changeMenu => _Menu.sink.add;
+
+  Function(UserListModel) get changeUserList => _userList.sink.add;
+
 
   //----------------------------dispose-----------------------------------------
 
@@ -71,6 +89,8 @@ class Bloc extends Validators {
     _isLoggedIn.close();
     _Menu.close();
     _orderRadioValue.close();
+    _userList.close();
+    _userDropdownValue.close();
   }
 
   //---------------------------custom_functions---------------------------------
@@ -112,6 +132,14 @@ class Bloc extends Validators {
     sessionManager.clearSession().whenComplete(() {
       routes.routeToLoginPage(context);
     });
+  }
+
+  void showUserList(){
+    repository.getUserList().then((onValue){
+      changeUserList(onValue);
+      print(onValue);
+    });
+
   }
 }
 
