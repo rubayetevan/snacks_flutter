@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:snacks/network/modelClasses/joblistModel.dart';
 import 'modelClasses/menuModel.dart';
 import 'modelClasses/userListModel.dart';
 import 'modelClasses/userModel.dart';
 
 class Repository {
   static const String basURL = "http://172.16.9.235/snacks";
+  static const String basURLJobs = "https://jobs.bdjobs.com/apps/api/v1";
   static const int connectTimeout = 5000;
   static const int receiveTimeout = 3000;
   static const String contentType = "application/x-www-form-urlencoded";
@@ -15,8 +17,10 @@ class Repository {
   UserModel _userModel;
   UserListModel _userListModel;
 
+  JobListModel _jobListModel;
+
   static final options = BaseOptions(
-    baseUrl: basURL,
+    baseUrl: basURLJobs,
     connectTimeout: connectTimeout,
     receiveTimeout: receiveTimeout,
     contentType: ContentType.parse(contentType),
@@ -73,6 +77,33 @@ class Repository {
     } else {
       return _userModel;
     }
+  }
+
+  Future<JobListModel> getJobList(int pageNumber) async {
+    print('pagenumber repo: $pageNumber');
+    var response = await _dio.request(
+      "/joblist.asp",
+      queryParameters: {
+        "armyp": "1",
+        "encoded": "02041526JSBJ2",
+        "pg": pageNumber,
+        "appId": "1"
+      },
+      options: _getOptions,
+    );
+
+    if (pageNumber == 1) {
+      _jobListModel = JobListModel.fromJson(response.data);
+    } else {
+      JobListModel.fromJson(response.data)
+          .data
+          .forEach((element) => _jobListModel.data.add(element));
+      _jobListModel.common.totalpages =
+          JobListModel.fromJson(response.data).common.totalpages;
+    }
+
+    print('pagenumber data size:${_jobListModel.data.length}');
+    return _jobListModel;
   }
 }
 

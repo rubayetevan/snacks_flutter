@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:snacks/network/modelClasses/joblistModel.dart';
 import 'package:snacks/network/modelClasses/menuModel.dart';
 import 'package:snacks/network/modelClasses/userListModel.dart';
 
@@ -74,6 +75,15 @@ class Validators {
   StreamTransformer<UserListModel, UserListModel>.fromHandlers(handleData: (userList, sink) {
     if (userList != null) {
       sink.add(userList);
+    } else {
+      sink.addError('userList not found');
+    }
+  });
+
+  final validateJoblist =
+  StreamTransformer<JobListModel, JobListModel>.fromHandlers(handleData: (jobListModel, sink) {
+    if (jobListModel != null) {
+      sink.add(jobListModel);
     } else {
       sink.addError('userList not found');
     }

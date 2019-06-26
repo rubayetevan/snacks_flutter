@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snacks/session/sessionManager.dart';
 import './Pages/login.dart';
 import 'Pages/home.dart';
+import 'Pages/orderList.dart';
 import 'blocs/bloc.dart';
 
 void main() => runApp(MyApp());
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: isLoggedIn ? Homepage() : LoginPage(),
+            //home: isLoggedIn ? Homepage() : LoginPage(),
+            home: OrderListPage(),
           );
         });
   }

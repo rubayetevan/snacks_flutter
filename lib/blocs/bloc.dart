@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:snacks/network/modelClasses/joblistModel.dart';
 import 'package:snacks/network/modelClasses/menuModel.dart';
 import 'package:snacks/network/modelClasses/userListModel.dart';
 import 'package:snacks/network/repository.dart';
@@ -22,6 +23,8 @@ class Bloc extends Validators {
   final _Menu = BehaviorSubject<MenuModel>();
   final _userList = BehaviorSubject<UserListModel>();
   final _userDropdownValue = BehaviorSubject<String>();
+
+  final _jobList = BehaviorSubject<JobListModel>();
 
   //-----------------------Stream-----------------------------------------------
 
@@ -55,6 +58,10 @@ class Bloc extends Validators {
   Stream<String> get userDropdownValue =>
       _userDropdownValue.stream.transform(validateOrder);
 
+
+  Stream<JobListModel> get jobList =>
+      _jobList.stream.transform(validateJoblist);
+
   //-----------------------Function---------------------------------------------
 
   Function(String) get changeUserEmail => _userEmail.sink.add;
@@ -77,6 +84,8 @@ class Bloc extends Validators {
 
   Function(UserListModel) get changeUserList => _userList.sink.add;
 
+  Function(JobListModel) get changeJobList => _jobList.sink.add;
+
 
   //----------------------------dispose-----------------------------------------
 
@@ -91,6 +100,7 @@ class Bloc extends Validators {
     _orderRadioValue.close();
     _userList.close();
     _userDropdownValue.close();
+    _jobList.close();
   }
 
   //---------------------------custom_functions---------------------------------
@@ -123,23 +133,30 @@ class Bloc extends Validators {
   }
 
   void showMenu() {
-    repository.getMenu().then((onValue) {
+   /* repository.getMenu().then((onValue) {
       changeMenu(onValue);
-    });
+    });*/
   }
 
   void logout(BuildContext context) {
-    sessionManager.clearSession().whenComplete(() {
+   /* sessionManager.clearSession().whenComplete(() {
       routes.routeToLoginPage(context);
-    });
+    });*/
   }
 
   void showUserList(){
-    repository.getUserList().then((onValue){
+   /* repository.getUserList().then((onValue){
       changeUserList(onValue);
       print(onValue);
-    });
+    });*/
 
+  }
+
+  void showJoblist(int pageNumber){
+    repository.getJobList(pageNumber).then((onValue){
+      print('job found: ${onValue.common.totalRecordsFound}');
+      changeJobList(onValue);
+    });
   }
 }
 
