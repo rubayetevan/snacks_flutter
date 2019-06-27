@@ -6,7 +6,6 @@ class OrderListPage extends StatelessWidget {
   ScrollController controller;
   int page = 1;
   int lastpage;
-  bool loadMore = false;
   bool dataArrieved = false;
 
   @override
@@ -49,21 +48,12 @@ class OrderListPage extends StatelessWidget {
   }
 
   void _scrollListener() {
-    int tempPage = page;
-    print('controller: ${controller.position}');
-    if (controller.position.extentAfter < 500 && page <= lastpage && dataArrieved) {
+
+    if (controller.position.extentAfter < 500 && page < lastpage && dataArrieved) {
       page++;
-      loadMore = true;
-    }
-
-    if (page > lastpage) {
-      loadMore = false;
-    }
-
-    if (loadMore && page != tempPage && dataArrieved) {
-      print('pagenumber: $page dataArrieved: $dataArrieved');
       dataArrieved = false;
       bloc.showJoblist(page);
     }
+
   }
 }
