@@ -20,7 +20,8 @@ class Repository {
   JobListModel _jobListModel;
 
   static final options = BaseOptions(
-    baseUrl: basURLJobs,
+    //baseUrl: basURLJobs,
+    baseUrl: basURL,
     connectTimeout: connectTimeout,
     receiveTimeout: receiveTimeout,
     contentType: ContentType.parse(contentType),

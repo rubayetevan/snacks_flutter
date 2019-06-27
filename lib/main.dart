@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            //home: isLoggedIn ? Homepage() : LoginPage(),
-            home: OrderListPage(),
+            home: isLoggedIn ? Homepage() : LoginPage(),
+            //home: OrderListPage(),
           );
         });
   }

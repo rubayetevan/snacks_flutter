@@ -133,22 +133,22 @@ class Bloc extends Validators {
   }
 
   void showMenu() {
-   /* repository.getMenu().then((onValue) {
+    repository.getMenu().then((onValue) {
       changeMenu(onValue);
-    });*/
+    });
   }
 
   void logout(BuildContext context) {
-   /* sessionManager.clearSession().whenComplete(() {
+    sessionManager.clearSession().whenComplete(() {
       routes.routeToLoginPage(context);
-    });*/
+    });
   }
 
   void showUserList(){
-   /* repository.getUserList().then((onValue){
+    repository.getUserList().then((onValue){
       changeUserList(onValue);
       print(onValue);
-    });*/
+    });
 
   }
 
