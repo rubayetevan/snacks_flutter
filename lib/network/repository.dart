@@ -36,7 +36,6 @@ class Repository {
     if (_menuModel == null) {
       var response = await _dio.request(
         "/getmenu.asp",
-        //data: {"id":12,"name":"xx"},
         options: _getOptions,
       );
       print(response.data);
@@ -93,17 +92,18 @@ class Repository {
       options: _getOptions,
     );
 
+    var _tempJoblistModel = JobListModel.fromJson(response.data);
+
     if (pageNumber == 1) {
-      _jobListModel = JobListModel.fromJson(response.data);
+      _jobListModel = _tempJoblistModel;
     } else {
-      JobListModel.fromJson(response.data)
-          .data
-          .forEach((element) => _jobListModel.data.add(element));
-      _jobListModel.common.totalpages =
-          JobListModel.fromJson(response.data).common.totalpages;
+      _tempJoblistModel.data.forEach((element) =>
+                  _jobListModel.data.add(element)
+      );
+
+      _jobListModel.common.totalpages = _tempJoblistModel.common.totalpages;
     }
 
-    print('pagenumber data size:${_jobListModel.data.length}');
     return _jobListModel;
   }
 }
