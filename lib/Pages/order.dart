@@ -20,10 +20,7 @@ class OrderPage extends StatelessWidget {
               builder: (context, snapshot) {
                 return RaisedButton(
                   child: Text('Order'),
-                  onPressed: snapshot.hasData ?(){
-
-
-                  }:null,
+                  onPressed: snapshot.hasData ? () {} : null,
                 );
               })
         ],
@@ -49,7 +46,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _mainMenu,
                             groupValue: snapshot.data,
-                            onChanged: (value){
+                            onChanged: (value) {
                               bloc.changeOrderRadioValue(value);
                             },
                           ),
@@ -61,7 +58,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[0].trim(),
                             groupValue: snapshot.data,
-                            onChanged: (value){
+                            onChanged: (value) {
                               bloc.changeOrderRadioValue(value);
                             },
                           ),
@@ -73,7 +70,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[1].trim(),
                             groupValue: snapshot.data,
-                            onChanged: (value){
+                            onChanged: (value) {
                               bloc.changeOrderRadioValue(value);
                             },
                           ),
@@ -85,7 +82,7 @@ class OrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[2].trim(),
                             groupValue: snapshot.data,
-                            onChanged: (value){
+                            onChanged: (value) {
                               bloc.changeOrderRadioValue(value);
                             },
                           ),
