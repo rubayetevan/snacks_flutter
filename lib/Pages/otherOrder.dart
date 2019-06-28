@@ -65,7 +65,9 @@ class OtherOrderPage extends StatelessWidget {
                           Radio(
                             value: _mainMenu,
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeOrderRadioValue,
+                            onChanged: (value){
+                              bloc.changeOrderRadioValue(value);
+                            },
                           ),
                           Text(_mainMenu)
                         ],
@@ -75,7 +77,9 @@ class OtherOrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[0].trim(),
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeOrderRadioValue,
+                            onChanged: (value){
+                              bloc.changeOrderRadioValue(value);
+                            },
                           ),
                           Text(_alternateMenus[0].trim())
                         ],
@@ -85,7 +89,9 @@ class OtherOrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[1].trim(),
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeOrderRadioValue,
+                            onChanged: (value){
+                              bloc.changeOrderRadioValue(value);
+                            },
                           ),
                           Text(_alternateMenus[1].trim())
                         ],
@@ -95,7 +101,9 @@ class OtherOrderPage extends StatelessWidget {
                           Radio(
                             value: _alternateMenus[2].trim(),
                             groupValue: snapshot.data,
-                            onChanged: bloc.changeOrderRadioValue,
+                            onChanged: (value){
+                              bloc.changeOrderRadioValue(value);
+                            },
                           ),
                           Text(_alternateMenus[2].trim())
                         ],
