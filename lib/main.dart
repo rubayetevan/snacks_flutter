@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snacks/session/sessionManager.dart';
+import 'package:snacks/utilities/permissionCheck.dart';
 import './Pages/login.dart';
 import 'Pages/home.dart';
 import 'Pages/orderList.dart';
@@ -10,6 +11,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    permissionManger.requestWritePermission();
     sessionManager.isLoggedIn.then((value) {
       print("isLoggedin: $value");
       bloc.changeIsLoggedIn(value);
