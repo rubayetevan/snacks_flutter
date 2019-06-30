@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:snacks/blocs/bloc.dart';
 import 'package:snacks/network/modelClasses/joblistModel.dart';
+import 'package:toast/toast.dart';
 
 class OrderListPage extends StatelessWidget {
-  ScrollController controller;
-  int page = 1;
-  int lastpage;
-  bool dataArrieved = false;
+  ScrollController _controller;
+  int _page = 1;
+  int _lastPage;
+  bool _dataArrieved = false;
 
   @override
   Widget build(BuildContext context) {
-    controller = ScrollController()..addListener(_scrollListener);
+    _controller = ScrollController()..addListener(_scrollListener);
     return Scaffold(
       body: Container(child: userList()),
     );
   }
 
   Widget userList() {
-    bloc.showJoblist(page);
+    bloc.showJoblist(_page);
     return StreamBuilder(
         stream: bloc.jobList,
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            dataArrieved = true;
-            lastpage = snapshot.data.common.totalpages;
+            _dataArrieved = true;
+            _lastPage = snapshot.data.common.totalpages;
             return ListView.builder(
-              controller: controller,
+              controller: _controller,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    snapshot.data.data[index].jobTitle,
-                    style: TextStyle(fontSize: 25),
+                return Card(
+                  child: InkWell(
+                    onTap: (){},
+                    child: ListTile(
+                      title: Text(
+                        snapshot.data.data[index].jobTitle,
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      subtitle: Text(snapshot.data.data[index].companyName),
+                      trailing: Text('index: $index'),
+                    ),
                   ),
-                  subtitle: Text(snapshot.data.data[index].companyName),
-                  trailing: Text('index: $index'),
                 );
               },
               itemCount: snapshot.data.data.length,
@@ -49,10 +55,10 @@ class OrderListPage extends StatelessWidget {
 
   void _scrollListener() {
 
-    if (controller.position.extentAfter < 500 && page < lastpage && dataArrieved) {
-      page++;
-      dataArrieved = false;
-      bloc.showJoblist(page);
+    if (_controller.position.extentAfter < 500 && _page < _lastPage && _dataArrieved) {
+      _page++;
+      _dataArrieved = false;
+      bloc.showJoblist(_page);
     }
 
   }
