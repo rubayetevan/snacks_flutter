@@ -6,31 +6,27 @@ import 'Pages/home.dart';
 import 'Pages/orderList.dart';
 import 'blocs/bloc.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(SnacksApp());
 
-class MyApp extends StatelessWidget {
+class SnacksApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    permissionManger.requestWritePermission();
-    sessionManager.isLoggedIn.then((value) {
-      print("isLoggedin: $value");
-      bloc.changeIsLoggedIn(value);
-    });
-
+    bloc.checkLoginStatus();
     return StreamBuilder(
         stream: bloc.isLoggedIn,
         builder: (context, snapshot) {
           var isLoggedIn = false;
-          if (snapshot.data != null && snapshot.data == true) {
+          if (snapshot.hasData) {
             isLoggedIn = snapshot.data;
           }
           return MaterialApp(
             title: 'Snacks',
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            //home: isLoggedIn ? Homepage() : LoginPage(),
-            home: OrderListPage(),
+            home: isLoggedIn ? Homepage() : LoginPage(),
+            //home: OrderListPage(),
           );
         });
   }

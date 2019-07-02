@@ -140,6 +140,8 @@ class Bloc extends Validators {
 
   void logout(BuildContext context) {
     sessionManager.clearSession().whenComplete(() {
+      _email.value=null;
+      _password.value=null;
       routes.routeToLoginPage(context);
     });
   }
@@ -156,6 +158,13 @@ class Bloc extends Validators {
     repository.getJobList(pageNumber).then((onValue){
       print('job found: ${onValue.common.totalRecordsFound}');
       changeJobList(onValue);
+    });
+  }
+
+  void checkLoginStatus(){
+    sessionManager.isLoggedIn.then((value) {
+      print("isLoggedin: $value");
+      bloc.changeIsLoggedIn(value);
     });
   }
 }
